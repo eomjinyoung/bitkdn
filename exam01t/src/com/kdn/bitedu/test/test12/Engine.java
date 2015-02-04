@@ -14,6 +14,7 @@ abstract public class Engine {
   protected int valve;
   protected String type;
   
+  
   /* 추상 메서드
    * - 메서드의 규칙만 정의하고,
    *   구체적인 구현은 서브 클래스에게 맡긴다.
