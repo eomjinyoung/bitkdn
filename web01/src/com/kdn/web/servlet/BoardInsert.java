@@ -12,9 +12,13 @@ import javax.servlet.annotation.WebServlet;
 public class BoardInsert extends GenericServlet {
 
   @Override
-  public void service(ServletRequest arg0, ServletResponse arg1)
+  public void service(ServletRequest request, ServletResponse response)
       throws ServletException, IOException {
-    System.out.println("okok");
+    String title = request.getParameter("title");
+    String content = request.getParameter("content");
+    
+    System.out.println(title);
+    System.out.println(content);
     
   }
 
