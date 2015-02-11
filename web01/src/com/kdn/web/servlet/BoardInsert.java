@@ -21,6 +21,10 @@ public class BoardInsert extends GenericServlet {
     String title = request.getParameter("title");
     String content = request.getParameter("content");
     
+    //한글을 출력하기
+    //- 출력 스트림을 얻기 전에, 전송할 데이터의 형식과 문자집합을 설정한다.
+    response.setContentType("text/plain;charset=UTF-8");
+    
     // 웹 브라우저로 출력하기
     PrintWriter out = response.getWriter();
     out.println(title);
