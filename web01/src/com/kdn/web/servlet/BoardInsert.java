@@ -27,8 +27,14 @@ public class BoardInsert extends GenericServlet {
     
     // 웹 브라우저로 출력하기
     PrintWriter out = response.getWriter();
-    out.println(title);
-    out.println(content);
+    out.println("<html>");
+    out.println("<head>");
+    out.println("<title>등록결과</title>");
+    out.println("</head>");
+    out.println("<body>");
+    out.println("<h1>등록 성공입니다!</h1>");
+    out.println("</body>");
+    out.println("</html>");
   }
 
 }
