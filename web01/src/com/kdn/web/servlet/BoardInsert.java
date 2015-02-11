@@ -1,6 +1,7 @@
 package com.kdn.web.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
@@ -20,9 +21,10 @@ public class BoardInsert extends GenericServlet {
     String title = request.getParameter("title");
     String content = request.getParameter("content");
     
-    System.out.println(title);
-    System.out.println(content);
-    
+    // 웹 브라우저로 출력하기
+    PrintWriter out = response.getWriter();
+    out.println(title);
+    out.println(content);
   }
 
 }
