@@ -1,6 +1,11 @@
 package com.kdn.web.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,25 +13,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kdn.web.dao.BoardDao;
-
 @WebServlet("/board/delete")
 public class BoardDelete extends HttpServlet {
   /* 리다이렉트 적용 버전*/
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    int no = Integer.parseInt(request.getParameter("no"));
+    String no = request.getParameter("no");
     
+    Connection con = null;
+    Statement stmt = null;
     try {
-      BoardDao boardDao = new BoardDao();
-      boardDao.delete(no);
+      Class.forName("com.mysql.jdbc.Driver");
+      con = DriverManager.getConnection(
+          "jdbc:mysql://localhost:3306/kdndb", "kdn", "123456789");
+      stmt = con.createStatement();
+      stmt.executeUpdate("delete from boards where bno=" + no);
       
       //Redirect: 웹 브라우저에게 콘텐츠를 보내지 않는다.
       response.sendRedirect("list");
     } catch (Exception e) {
       e.printStackTrace();
-    } 
+      
+    } finally {
+      try {stmt.close();} catch (Exception e) {}
+      try {con.close();} catch (Exception e) {}
+    }
 
   }
   
