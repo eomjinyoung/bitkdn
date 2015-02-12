@@ -45,7 +45,10 @@ public class BoardList extends HttpServlet {
       while(rs.next()) { //DBMS 서버에서 레코드를 하나 가져온다.
         out.println("<tr>");
         out.println("<td>" + rs.getInt("bno") + "</td>");
-        out.println("<td>" + rs.getString("title") + "</td>");
+        out.println("<td><a href='detail?no=" 
+            + rs.getInt("bno") + "'>" 
+            + rs.getString("title") 
+            + "</a></td>");
         out.println("<td>" + rs.getDate("create_date") + "</td>");
         out.println("<td>" + rs.getInt("view") + "</td>");
         out.println("</tr>");
