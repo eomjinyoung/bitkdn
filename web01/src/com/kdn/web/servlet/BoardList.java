@@ -22,6 +22,13 @@ public class BoardList extends HttpServlet {
     PrintWriter out = response.getWriter();
     out.println("<html><head><title>게시물목록</title></head><body>");
     out.println("<h1>게시물 목록</h1>");
+    out.println("<table border='1'>");
+    out.println("<tr>");
+    out.println("<th>번호</th>");
+    out.println("<th>제목</th>");
+    out.println("<th>등록일</th>");
+    out.println("<th>조회수</th>");
+    out.println("</tr>");
     
     Connection con = null;
     Statement stmt = null;
@@ -36,17 +43,21 @@ public class BoardList extends HttpServlet {
       stmt = con.createStatement();
       rs = stmt.executeQuery("select bno, title, create_date, view from boards");
       while(rs.next()) { //DBMS 서버에서 레코드를 하나 가져온다.
-        out.println(rs.getInt("bno") + ","
-            + rs.getString("title") + ","
-            + rs.getDate("create_date") + ","
-            + rs.getInt("view") + "<br>");
+        out.println("<tr>");
+        out.println("<td>" + rs.getInt("bno") + "</td>");
+        out.println("<td>" + rs.getString("title") + "</td>");
+        out.println("<td>" + rs.getDate("create_date") + "</td>");
+        out.println("<td>" + rs.getInt("view") + "</td>");
+        out.println("</tr>");
       }
+      out.println("</table>");
       out.println("</body></html>");
       
     } catch (Exception e) {
       e.printStackTrace();
       
     } finally {
+      try {rs.close();} catch (Exception e) {}
       try {stmt.close();} catch (Exception e) {}
       try {con.close();} catch (Exception e) {}
     }
