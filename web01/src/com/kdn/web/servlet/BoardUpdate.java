@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
@@ -21,31 +21,30 @@ public class BoardUpdate extends GenericServlet {
     //한글이 깨지지 않도록 하려면, getParameter()를 최초로 호출하기 전에 
     //입력 데이터의 인코딩 형식을 설정해야 한다.
     request.setCharacterEncoding("UTF-8");
+    int no = Integer.parseInt(request.getParameter("no"));
     String title = request.getParameter("title");
     String content = request.getParameter("content");
     
     Connection con = null;
-    Statement stmt = null;
+    PreparedStatement stmt = null;
     try {
-      //DB에 입력하기
-      //1. JDBC Driver 중에서 Driver 구현체 클래스 로딩
-      //DriverManager.registerDriver(com.mysql.jdbc.Driver.class);
       Class.forName("com.mysql.jdbc.Driver");
-      
-      //2. DB 커넥션 객체를 얻기
       con = DriverManager.getConnection(
           /* JDBC URL */ "jdbc:mysql://localhost:3306/kdndb",
           /* User ID */ "kdn",
           /* User Password */ "123456789");
       
-      //3. SQL을 질의할 객체를 얻기
-      stmt = con.createStatement();
+      //SQL문을 준비한다.
+      //값이 들어갈 자리를 ?(in-parameter)로 지정한다.
+      stmt = con.prepareStatement(
+          "update boards set title=?, content=?, create_date=now() where bno=?");
       
-      //4. DBMS에 SQL을 보내기
-      //- executeUpdate() : INSERT, UPDATE, DELETE, CREATE, DROP 등 실행
-      //- executeQuery() : SELECT 실행
-      stmt.executeUpdate("insert into boards(title,content,create_date,view)"
-          + " value('" + title + "','" + content + "',now(),0)");
+      //준비된 SQL문 값 넣기
+      stmt.setString(1, title);
+      stmt.setString(2, content);
+      stmt.setInt(3, no);
+      
+      stmt.executeUpdate();
       
     } catch (Exception e) {
       e.printStackTrace();

@@ -45,7 +45,8 @@ public class BoardDetail extends HttpServlet {
         
         out.println("<tr>");
         out.println("<th>번호</th>");
-        out.println("<td>" + rs.getInt("bno") + "</td>");
+        out.println("<td><input type='text' name='no' readonly value='" 
+            + rs.getInt("bno") + "'></td>");
         out.println("</tr>");
         
         out.println("<tr>");
