@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,36 +20,18 @@ public class BoardList extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
-    PrintWriter out = response.getWriter();
-    out.println("<html><head><title>게시물목록</title></head><body>");
-    out.println("<h1>게시물 목록</h1>");
-    out.println("<table border='1'>");
-    out.println("<tr>");
-    out.println("<th>번호</th>");
-    out.println("<th>제목</th>");
-    out.println("<th>등록일</th>");
-    out.println("<th>조회수</th>");
-    out.println("</tr>");
-    
     
     try {
       BoardDao boardDao = new BoardDao();
       List<Board> list = boardDao.list();
       
-      for(Board board : list) { //DBMS 서버에서 레코드를 하나 가져온다.
-        out.println("<tr>");
-        out.println("<td>" + board.getNo() + "</td>");
-        out.println("<td><a href='detail?no=" 
-            + board.getNo() + "'>" 
-            + board.getTitle() 
-            + "</a></td>");
-        out.println("<td>" + board.getCreateDate() + "</td>");
-        out.println("<td>" + board.getViewCount() + "</td>");
-        out.println("</tr>");
-      }
-      out.println("</table>");
-      out.println("<p><a href='form.html'>[새 글]</a></p>");
-      out.println("</body></html>");
+      //JSP가 사용할 수 있도록 ServletRequest 보관소에 저장
+      request.setAttribute("list", list);
+      
+      //JSP로 요청을 배달해 줄 객체를 얻는다.
+      RequestDispatcher rd = request.getRequestDispatcher("/board/List.jsp");
+      //JSP로 실행을 위임한다.
+      rd.include(request, response);
       
     } catch (Exception e) {
       e.printStackTrace();
@@ -56,3 +39,14 @@ public class BoardList extends HttpServlet {
 
   }
 }
+
+
+
+
+
+
+
+
+
+
+
