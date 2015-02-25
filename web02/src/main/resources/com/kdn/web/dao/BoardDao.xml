@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- <sql> 태그 사용하기
+=> 자주 사용되는 SQL문은 별도로 정의해두고 포함한다.
+-->
+
+<mapper namespace="com.kdn.web.dao.BoardDao">
+
+  <!-- 객체의 컬럼과 프로퍼티를 연결한다. -->
+  <resultMap type="Board" id="boardMap">
+    <!-- PK 컬럼은 id 태그를 사용하여 지정한다. -->
+    <id column="bno" property="no"/>
+    <result column="title" property="title"/>
+    <result column="content" property="content"/>
+    <result column="create_date" property="createDate"/>
+    <result column="view" property="viewCount"/>
+  </resultMap>
+  
+  <insert id="insert" parameterType="Board">
+    insert into boards(title,content,create_date,view)
+    value(#{title},#{content},now(),0)
+  </insert>
+  
+  <select id="list" resultMap="boardMap">
+    select bno, title, create_date, view 
+    from boards
+    order by bno desc
+  </select>
+  
+  <select id="detail" parameterType="int" resultMap="boardMap">
+    select bno, title, content, create_date, view 
+    from boards
+    where bno=#{value}
+  </select>
+  
+  
+  <update id="update" parameterType="Board">
+    update boards set 
+      title=#{no}, 
+      content=#{content}, 
+      create_date=now() 
+    where bno=#{no}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    delete from boards where bno=#{value}
+  </delete>
+</mapper>
