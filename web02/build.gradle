@@ -1,0 +1,46 @@
+apply plugin: 'java'
+apply plugin: 'war' //웹 관련 빌드 플러그인
+apply plugin: 'eclipse-wtp' //웹 관련 빌드 플러그인
+
+compileJava {
+    sourceCompatibility = 1.7 //컴파일 할 때 자바 버전을 지정.
+    options.encoding = 'UTF-8' //소스 파일의 문자 집합을 컴파일러에게 알려준다.
+}
+
+version = '1.0' //jar파일 만들 때 파일명에 들어갈 버전 지정.
+
+//의존 라이브러리를 다운로드 받을 서버 지정.
+repositories {
+    mavenCentral() // 메이븐 중앙 서버를 사용! repo1.maven.com
+}
+
+//프로젝트에서 사용할 의존 라이브러리 지정.
+//의존 라이브러리 이름 검색 => www.mvnrepository.com
+dependencies {
+    //servlet API는 컴파일 할 때만 사용해야 한다. 
+    //배포는 하지 말아야 한다.
+    //컴파일 
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    
+    //컴파일 + 배포
+    compile 'jstl:jstl:1.2'
+    compile 'mysql:mysql-connector-java:5.1.34'
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    
+    //컴파일 + 테스트 실행 
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
