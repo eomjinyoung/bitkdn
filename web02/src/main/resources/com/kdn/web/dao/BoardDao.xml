@@ -39,7 +39,7 @@
   
   <update id="update" parameterType="Board">
     update boards set 
-      title=#{no}, 
+      title=#{title}, 
       content=#{content}, 
       create_date=now() 
     where bno=#{no}

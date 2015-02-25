@@ -8,7 +8,7 @@
   <p>해당 게시물을 찾을 수 없습니다!</p>
 </c:when>
 <c:otherwise>
-<form action='update' method='post'>
+<form action='update.do' method='post'>
 <table border='1'>
 <tr>
 <th>번호</th>
@@ -36,7 +36,7 @@
 </form>
 <script>
   function deleteBoard() {
-    location.href='delete?no=${board.no}';
+    location.href='delete.do?no=${board.no}';
   }
 </script>  
 </c:otherwise>

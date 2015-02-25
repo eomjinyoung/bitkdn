@@ -23,6 +23,15 @@ dependencies {
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
     
     //컴파일 + 배포
+    //스프링 웹 MVC 프레임워크 라이브러리(+ 스프링 IoC 컨테이너)
+    compile 'org.springframework:spring-webmvc:4.1.5.RELEASE'
+    
+    //스프링-mybatis 연동 라이브러리
+    compile 'org.mybatis:mybatis-spring:1.2.2'
+    
+    //스프링 JDBC 관련 라이브러리
+    compile 'org.springframework:spring-jdbc:4.1.5.RELEASE'
+    
     compile 'org.mybatis:mybatis:3.2.8'
     compile 'jstl:jstl:1.2'
     compile 'mysql:mysql-connector-java:5.1.34'
